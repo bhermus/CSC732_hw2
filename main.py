@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
+from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
@@ -78,3 +79,7 @@ for epoch in range(1, num_epochs + 1):
 
 # Use the trained weights and bias to make predictions on the validation set
 predictions_val = np.dot(X_val_scaled, weights) + bias
+
+# Calculate R-squared
+r_squared = r2_score(y_val['Y1'], predictions_val)
+print("R-squared:", r_squared)
