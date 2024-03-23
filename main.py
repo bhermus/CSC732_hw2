@@ -24,6 +24,10 @@ feature_descriptions = {
     'X7': 'Glazing Area',
     'X8': 'Glazing Area Distribution'
 }
+target_variables = {
+    'Y1': 'Heating Load',
+    'Y2': 'Cooling Load'
+}
 
 # Split data into 70% training and 30% (20% validation + 10% testing)
 X_train_val, X_test, y_train_val, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
@@ -58,7 +62,7 @@ for epoch in range(1, num_epochs + 1):
     predictions_val = np.dot(X_val_scaled, weights) + bias
 
     # Compute loss (mean squared error)
-    loss_train = np.mean((predictions_train - y_train["Y1"])**2)
+    loss_train = np.mean((predictions_train - y_train["Y1"])**2)  # NOTE: We are using Y1, "Heating Load"
     loss_val = np.mean((predictions_val - y_val["Y1"])**2)
 
     # Backward pass: compute gradients
