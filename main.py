@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
 # Adjust pandas settings
 pd.set_option('display.max_rows', None)
@@ -34,3 +36,41 @@ print("Training set size:", len(X_train))
 print("Validation set size:", len(X_val))
 print("Testing set size:", len(X_test))
 
+# Initialize the StandardScaler
+scaler = StandardScaler()
+
+# Fit the scaler on the training data and transform both training and validation sets
+X_train_scaled = scaler.fit_transform(X_train)
+X_val_scaled = scaler.transform(X_val)
+
+n_features = X_train_scaled.shape[1]  # 8
+weights = np.zeros(n_features)
+bias = 0
+
+# Hyperparameters
+learning_rate = 0.01
+num_epochs = 1000
+
+# GD training loop
+for epoch in range(1, num_epochs + 1):
+    # Forward pass: compute predictions
+    predictions_train = np.dot(X_train_scaled, weights) + bias
+    predictions_val = np.dot(X_val_scaled, weights) + bias
+
+    # Compute loss (mean squared error)
+    loss_train = np.mean((predictions_train - y_train["Y1"])**2)
+    loss_val = np.mean((predictions_val - y_val["Y1"])**2)
+
+    # Backward pass: compute gradients
+    grad_weights = np.dot(X_train_scaled.T, predictions_train - y_train["Y1"]) / len(X_train_scaled)
+    grad_bias = np.mean(predictions_train - y_train["Y1"])
+
+    # Update model parameters
+    weights -= learning_rate * grad_weights
+    bias -= learning_rate * grad_bias
+
+    if epoch % 100 == 0:
+        print(f"Iteration {epoch}: Training Loss = {loss_train}, Validation Loss = {loss_val}")
+
+# Use the trained weights and bias to make predictions on the validation set
+predictions_val = np.dot(X_val_scaled, weights) + bias

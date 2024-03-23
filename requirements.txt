@@ -1,5 +1,6 @@
 certifi
 matplotlib
+numpy
 pandas
 scikit-learn
 ucimlrepo
