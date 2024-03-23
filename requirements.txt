@@ -2,5 +2,6 @@ certifi
 matplotlib
 numpy
 pandas
+seaborn
 scikit-learn
 ucimlrepo

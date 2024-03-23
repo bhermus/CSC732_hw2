@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn
 
-from sklearn.metrics import r2_score
+from sklearn.metrics import r2_score, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
@@ -83,3 +84,23 @@ predictions_val = np.dot(X_val_scaled, weights) + bias
 # Calculate R-squared
 r_squared = r2_score(y_val['Y1'], predictions_val)
 print("R-squared:", r_squared)
+
+predictions_test = np.dot(X_test, weights) + bias
+
+# Define a threshold for determining classes
+threshold = 10
+
+# Convert continuous predictions to binary classes based on the threshold
+predicted_classes = (predictions_test > threshold).astype(int)
+actual_classes = (y_test['Y1'] > threshold).astype(int)
+
+# Calculate the confusion matrix
+conf_matrix = confusion_matrix(actual_classes, predicted_classes)
+
+# Plot the confusion matrix
+plt.figure(figsize=(8, 6))
+seaborn.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False)
+plt.title('Confusion Matrix (Testing Set)')
+plt.xlabel('Predicted Class')
+plt.ylabel('Actual Class')
+plt.show()
