@@ -21,7 +21,5 @@ feature_descriptions = {
     'X8': 'Glazing Area Distribution'
 }
 
-# variable information
-print(energy_efficiency.variables)
 
 
