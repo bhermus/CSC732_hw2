@@ -1,0 +1,5 @@
+certifi
+matplotlib
+pandas
+scikit-learn
+ucimlrepo
