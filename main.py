@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from sklearn.model_selection import train_test_split
+
 # Adjust pandas settings
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
@@ -21,5 +23,14 @@ feature_descriptions = {
     'X8': 'Glazing Area Distribution'
 }
 
+# Split data into 70% training and 30% (20% validation + 10% testing)
+X_train_val, X_test, y_train_val, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
+# Further split the remaining data (30%) into 20% validation and 10% testing
+X_train, X_val, y_train, y_val = train_test_split(X_train_val, y_train_val, test_size=1/3, random_state=42)
+
+# Print the sizes of each subset
+print("Training set size:", len(X_train))
+print("Validation set size:", len(X_val))
+print("Testing set size:", len(X_test))
 
