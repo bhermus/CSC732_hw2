@@ -1,3 +1,26 @@
+import numpy as np
+from matplotlib import pyplot as plt
+from sklearn import datasets
+import pandas as pd
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from matplotlib.pyplot import figure
+from sklearn.preprocessing import StandardScaler,LabelEncoder,MinMaxScaler,Normalizer,RobustScaler
+from sklearn.metrics import r2_score,confusion_matrix
+from sklearn.metrics import mean_squared_error
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.utils import shuffle
+
+filename = "BankNote_Authentication.csv"
+Bank = pd.read_csv(filename)
+
+print('Split dataset')
+
+X_data = Bank['variance'].values[:, np.newaxis]
+Y_data = Bank['skewness'].values
+
+
 w = 1.0
 
 def forward(x):
